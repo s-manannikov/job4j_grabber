@@ -14,17 +14,10 @@ import static org.quartz.TriggerBuilder.*;
 import static org.quartz.SimpleScheduleBuilder.*;
 
 public class AlertRabbit {
-    public static void main(String[] args) throws ClassNotFoundException {
-        Properties properties = new Properties();
-        Class.forName("org.postgresql.Driver");
-        ClassLoader loader = Settings.class.getClassLoader();
-        try (InputStream in = loader.getResourceAsStream("rabbit.properties")) {
-            properties.load(in);
-            int interval = Integer.parseInt(properties.getProperty("rabbit.interval"));
-            String url = properties.getProperty("jdbc.url");
-            String login = properties.getProperty("jdbc.login");
-            String password = properties.getProperty("jdbc.password");
-            Connection connection = DriverManager.getConnection(url, login, password);
+    private static int interval = 0;
+
+    public static void main(String[] args) throws Exception {
+            Connection connection = connection();
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
             JobDataMap data = new JobDataMap();
@@ -43,19 +36,30 @@ public class AlertRabbit {
             Thread.sleep(10000);
             scheduler.shutdown();
             connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        }
+
+    private static Connection connection() throws Exception {
+        Properties properties = new Properties();
+        ClassLoader loader = Settings.class.getClassLoader();
+        try (InputStream in = loader.getResourceAsStream("rabbit.properties")) {
+            properties.load(in);
+            interval = Integer.parseInt(properties.getProperty("rabbit.interval"));
+            Class.forName(properties.getProperty("driver-class-name"));
+            String url = properties.getProperty("jdbc.url");
+            String login = properties.getProperty("jdbc.login");
+            String password = properties.getProperty("jdbc.password");
+            return DriverManager.getConnection(url, login, password);
         }
     }
 
-    public static class Rabbit implements Job {
+        public static class Rabbit implements Job {
 
         public Rabbit() {
             System.out.println(hashCode());
         }
 
         @Override
-        public void execute(JobExecutionContext context) throws JobExecutionException {
+        public void execute(JobExecutionContext context) {
             System.out.println("Follow the white rabbit ...");
             Connection connection = (Connection) context.getJobDetail().getJobDataMap().get("store");
             try (PreparedStatement statement = connection.prepareStatement(
