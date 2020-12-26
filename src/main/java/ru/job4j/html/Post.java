@@ -5,12 +5,14 @@ import java.time.LocalDateTime;
 public class Post {
     private int id;
     private String link;
+    private String header;
     private String description;
     private LocalDateTime date;
 
-    public Post(int id, String link, String description, LocalDateTime date) {
+    public Post(int id, String link, String header, String description, LocalDateTime date) {
         this.id = id;
         this.link = link;
+        this.header = header;
         this.description = description;
         this.date = date;
     }
@@ -29,6 +31,14 @@ public class Post {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
     }
 
     public String getDescription() {
@@ -52,6 +62,7 @@ public class Post {
         return "Post{"
                 + "id=" + id
                 + ", link='" + link + '\''
+                + ", header='" + header + '\''
                 + ", description='" + description + '\''
                 + ", date=" + date
                 + '}';
