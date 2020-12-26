@@ -16,13 +16,15 @@ public class SqlRuParse implements Parse {
     @Override
     public List<Post> list(String link) throws IOException {
         List<Post> rsl = new ArrayList<>();
-        Document doc = Jsoup.connect(link).get();
-        Elements rows = doc.select(".postslisttopic");
-        for (Element e : rows) {
-            Element href = e.child(0);
-            Post post = detail(href.attr("href"));
-            if (post.getDescription().contains("Java") || post.getHeader().contains("Java")) {
-                rsl.add(detail(href.attr("href")));
+        for (int i = 1; i <= 10; i++) {
+            Document doc = Jsoup.connect(link + i).get();
+            Elements rows = doc.select(".postslisttopic");
+            for (Element e : rows) {
+                Element href = e.child(0);
+                Post post = detail(href.attr("href"));
+                if (post.getDescription().contains("Java") || post.getHeader().contains("Java")) {
+                    rsl.add(post);
+                }
             }
         }
         return rsl;
@@ -33,10 +35,10 @@ public class SqlRuParse implements Parse {
         Document doc = Jsoup.connect(link).get();
         PostParse pp = new PostParse();
         return new Post(
-                    pp.headerParse(doc),
-                    pp.descriptionParse(doc),
-                    link,
-                    new DateFormat().getDate(pp.createdParse(doc))
+                pp.headerParse(doc),
+                pp.descriptionParse(doc),
+                link,
+                new DateFormat().getDate(pp.createdParse(doc))
             );
     }
 }

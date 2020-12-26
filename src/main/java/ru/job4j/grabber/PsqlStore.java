@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Properties;
 
 public class PsqlStore implements Store, AutoCloseable {
-    private Connection cnn;
+    private final Connection cnn;
 
     public PsqlStore(Properties cfg) throws SQLException {
         try {
@@ -103,12 +103,12 @@ public class PsqlStore implements Store, AutoCloseable {
     public static void main(String[] args) throws SQLException, IOException {
         Properties properties = new Properties();
         ClassLoader loader = Settings.class.getClassLoader();
-        try (InputStream in = loader.getResourceAsStream("rabbit.properties")) {
+        try (InputStream in = loader.getResourceAsStream("app.properties")) {
             properties.load(in);
         }
         SqlRuParse sqlParse = new SqlRuParse();
         PsqlStore psql = new PsqlStore(properties);
-        sqlParse.list("https://www.sql.ru/forum/job-offers").forEach(f -> psql.save(f));
+        sqlParse.list("https://www.sql.ru/forum/job-offers/").forEach(psql::save);
         List<Post> all = psql.getAll();
         all.forEach(i -> System.out.println(i + System.lineSeparator()));
     }
