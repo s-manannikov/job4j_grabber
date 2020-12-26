@@ -1,4 +1,4 @@
-package ru.job4j.html;
+package ru.job4j.grabber;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +11,13 @@ public class Post {
 
     public Post(int id, String link, String header, String description, LocalDateTime date) {
         this.id = id;
+        this.link = link;
+        this.header = header;
+        this.description = description;
+        this.date = date;
+    }
+
+    public Post(String link, String header, String description, LocalDateTime date) {
         this.link = link;
         this.header = header;
         this.description = description;
