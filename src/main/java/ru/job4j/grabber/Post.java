@@ -7,21 +7,21 @@ public class Post {
     private String link;
     private String header;
     private String description;
-    private LocalDateTime date;
+    private LocalDateTime created;
 
-    public Post(int id, String link, String header, String description, LocalDateTime date) {
+    public Post(int id, String link, String header, String description, LocalDateTime created) {
         this.id = id;
         this.link = link;
         this.header = header;
         this.description = description;
-        this.date = date;
+        this.created = created;
     }
 
-    public Post(String link, String header, String description, LocalDateTime date) {
+    public Post(String link, String header, String description, LocalDateTime created) {
         this.link = link;
         this.header = header;
         this.description = description;
-        this.date = date;
+        this.created = created;
     }
 
     public int getId() {
@@ -56,12 +56,12 @@ public class Post {
         this.description = description;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getCreated() {
+        return created;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class Post {
                 + ", link='" + link + '\''
                 + ", header='" + header + '\''
                 + ", description='" + description + '\''
-                + ", date=" + date
+                + ", created=" + created
                 + '}';
     }
 }
