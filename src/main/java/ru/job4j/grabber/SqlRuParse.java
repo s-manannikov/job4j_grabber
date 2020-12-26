@@ -20,7 +20,10 @@ public class SqlRuParse implements Parse {
         Elements rows = doc.select(".postslisttopic");
         for (Element e : rows) {
             Element href = e.child(0);
-            rsl.add(detail(href.attr("href")));
+            Post post = detail(href.attr("href"));
+            if (post.getDescription().contains("Java") || post.getHeader().contains("Java")) {
+                rsl.add(detail(href.attr("href")));
+            }
         }
         return rsl;
     }
@@ -30,10 +33,10 @@ public class SqlRuParse implements Parse {
         Document doc = Jsoup.connect(link).get();
         PostParse pp = new PostParse();
         return new Post(
-                pp.headerParse(doc),
-                pp.descriptionParse(doc),
-                link,
-                new DateFormat().getDate(pp.createdParse(doc))
-        );
+                    pp.headerParse(doc),
+                    pp.descriptionParse(doc),
+                    link,
+                    new DateFormat().getDate(pp.createdParse(doc))
+            );
     }
 }
