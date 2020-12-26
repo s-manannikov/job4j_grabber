@@ -4,23 +4,26 @@ import java.time.LocalDateTime;
 
 public class Post {
     private int id;
-    private String link;
     private String header;
     private String description;
+    private String link;
     private LocalDateTime created;
 
-    public Post(int id, String link, String header, String description, LocalDateTime created) {
+    public Post() {
+    }
+
+    public Post(int id, String header, String description, String link, LocalDateTime created) {
         this.id = id;
-        this.link = link;
         this.header = header;
         this.description = description;
+        this.link = link;
         this.created = created;
     }
 
-    public Post(String link, String header, String description, LocalDateTime created) {
-        this.link = link;
+    public Post(String header, String description, String link, LocalDateTime created) {
         this.header = header;
         this.description = description;
+        this.link = link;
         this.created = created;
     }
 
@@ -30,14 +33,6 @@ public class Post {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
     }
 
     public String getHeader() {
@@ -56,6 +51,14 @@ public class Post {
         this.description = description;
     }
 
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     public LocalDateTime getCreated() {
         return created;
     }
@@ -68,9 +71,9 @@ public class Post {
     public String toString() {
         return "Post{"
                 + "id=" + id
-                + ", link='" + link + '\''
                 + ", header='" + header + '\''
                 + ", description='" + description + '\''
+                + ", link='" + link + '\''
                 + ", created=" + created
                 + '}';
     }

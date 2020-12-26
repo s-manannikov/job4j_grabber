@@ -30,9 +30,9 @@ public class SqlRuParse implements Parse {
         Document doc = Jsoup.connect(link).get();
         PostParse pp = new PostParse();
         return new Post(
-                link,
                 pp.headerParse(doc),
                 pp.descriptionParse(doc),
+                link,
                 new DateFormat().getDate(pp.createdParse(doc))
         );
     }
