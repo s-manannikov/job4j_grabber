@@ -10,6 +10,7 @@ import ru.job4j.html.PostParse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SqlRuParse implements Parse {
 
@@ -22,7 +23,8 @@ public class SqlRuParse implements Parse {
             for (Element e : rows) {
                 Element href = e.child(0);
                 Post post = detail(href.attr("href"));
-                if (post.getDescription().contains("Java") || post.getHeader().contains("Java")) {
+                if (post.getDescription().toLowerCase().contains("java")
+                        || post.getHeader().toLowerCase().contains("java")) {
                     rsl.add(post);
                 }
             }
