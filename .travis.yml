@@ -10,7 +10,7 @@ env:
     - CODECOV_TOKEN="8c730528-d6ed-4361-9941-703205a72c4c"
 
 # после выполнения сборки запустить скрипт, который будет собирать статистику по JaCoCo
-# Здесь используется сторонни сервис https://codecov.io/
+# Здесь используется сторонний сервис https://codecov.io/
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
